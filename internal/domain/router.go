@@ -48,7 +48,7 @@ func (r *Router) Start() {
 	fmt.Println("server is already running at PORT: " + r.port)
 
 	if err := http.ListenAndServe("0.0.0.0:"+r.port, handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:5173"}),
+		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
 		handlers.AllowCredentials(),
