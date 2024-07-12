@@ -1,31 +1,22 @@
-# Etapa de base, usando uma imagem Ubuntu como base
-FROM ubuntu:jammy AS base
+# Use a imagem oficial do Go como base para a construção do projeto
+FROM golang:1.20 AS build
 
-# Definindo o diretório de trabalho
+# Definindo o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Etapa de configuração do Nix
-FROM base AS nix-config
+# Copiando go.mod e go.sum
+COPY go.mod go.sum ./
 
-# Copiando o arquivo de configuração do Nix
-COPY .nixpacks/nixpkgs-e89cf1c932006531f454de7d652163a9a5c86668.nix .nixpacks/nixpkgs-e89cf1c932006531f454de7d652163a9a5c86668.nix
+# Baixando as dependências Go
+RUN go mod download
 
-# Instalando as dependências do Nix e limpando o cache
-RUN nix-env -if .nixpacks/nixpkgs-e89cf1c932006531f454de7d652163a9a5c86668.nix && nix-collect-garbage -d
-
-# Etapa de construção
-FROM nix-config AS build
-
-# Copiando todos os arquivos do projeto para o diretório de trabalho
-COPY . /app
-
-# Definindo o cache para o Go
-RUN --mount=type=cache,id=s/d6e68f11-4a86-452e-bfd9-2e7ad760fc72-/root/cache/go-build,target=/root/.cache/go-build go mod download
+# Copiando o restante dos arquivos do projeto
+COPY . .
 
 # Construindo o binário Go
-RUN --mount=type=cache,id=s/d6e68f11-4a86-452e-bfd9-2e7ad760fc72-/root/cache/go-build,target=/root/.cache/go-build go build -o out ./...
+RUN go build -o out ./...
 
-# Etapa final
+# Usando uma imagem mais leve para o runtime
 FROM ubuntu:jammy
 
 # Definindo o diretório de trabalho
