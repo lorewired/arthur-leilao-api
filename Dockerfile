@@ -13,8 +13,8 @@ RUN go mod download
 # Copiando o restante dos arquivos do projeto
 COPY . .
 
-# Construindo o binário Go. Ajuste ./cmd/main se necessário.
-RUN go build -o out ./cmd/main
+# Construindo o binário Go
+RUN go build -o out ./cmd
 
 # Usando uma imagem mais leve para o runtime
 FROM ubuntu:jammy
