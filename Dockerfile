@@ -1,5 +1,5 @@
 # Use a imagem oficial do Go como base para a construção do projeto
-FROM golang:1.20 AS build
+FROM golang:1.21.2 AS build
 
 # Definindo o diretório de trabalho dentro do container
 WORKDIR /app
@@ -13,8 +13,8 @@ RUN go mod download
 # Copiando o restante dos arquivos do projeto
 COPY . .
 
-# Construindo o binário Go
-RUN go build -o out ./...
+# Construindo o binário Go. Ajuste ./cmd/main se necessário.
+RUN go build -o out ./cmd/main
 
 # Usando uma imagem mais leve para o runtime
 FROM ubuntu:jammy
