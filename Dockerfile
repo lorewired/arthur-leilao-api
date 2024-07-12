@@ -1,5 +1,5 @@
 # Use a imagem oficial do Go como base para a construção do projeto
-FROM golang:1.20 AS build
+FROM golang:1.22.3 AS build
 
 # Definindo o diretório de trabalho dentro do container
 WORKDIR /app
