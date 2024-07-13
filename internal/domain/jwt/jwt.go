@@ -209,7 +209,7 @@ func (jwt *Jwt) Logout(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:     "jwt",
 		Value:    "",
-		Expires:  time.Now().Add(-(time.Minute * 3)),
+		Expires:  time.Now().Add(-(time.Hour * 24)),
 		HttpOnly: true,
 	}
 
