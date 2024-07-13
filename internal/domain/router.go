@@ -48,7 +48,7 @@ func (r *Router) Start() {
 	fmt.Println("server is already running at PORT: " + r.port)
 
 	if err := http.ListenAndServe("0.0.0.0:"+r.port, handlers.CORS(
-		handlers.AllowedOrigins([]string{"https://yuraibids.netlify.app", "https://arthur-leilao-api-production.up.railway.app"}),
+		handlers.AllowedOrigins([]string{"https://yuraibids.netlify.app", "https://arthur-leilao-api-production.up.railway.app", "http://localhost:5173"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
 		handlers.AllowCredentials(),
