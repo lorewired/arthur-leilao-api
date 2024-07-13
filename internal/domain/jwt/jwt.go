@@ -86,7 +86,7 @@ func generateToken(id string, secret_key []byte) (string, error) {
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": id,
 		"iss": "arthurleilao",
-		"exp": time.Now().Add(time.Minute * 30).Unix(),
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
 	})
 
 	token_string, err := claims.SignedString(secret_key)
